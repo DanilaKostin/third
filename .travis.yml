@@ -9,7 +9,7 @@ before_install:
 addons:
   sonarcloud:
     organization: "danilakostin"
-    token: ${Cov}
+    token: ${COV}
 
 script:
   - qmake
