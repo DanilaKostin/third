@@ -37,7 +37,7 @@ double atang(double x, double y){
 double reject(double x){
 
 
-double grad;
+double grad = 0;    
 
     if (x > 0)
     {
