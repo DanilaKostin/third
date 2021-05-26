@@ -1,13 +1,15 @@
-os: linux
-dist: xenial
+dist: bionic
 
+language:
+  - cpp
 
 before_install:
   - pip install --user cpp-coveralls
 
 addons:
   sonarcloud:
-    organization: "danilakostin"
+    organization: "bloody-azimus"
+    token: $SONAR_TOKEN
 
 script:
   - qmake
@@ -15,14 +17,10 @@ script:
   - ./tests/tests
 
 after_success:
-  - coveralls --root . -E ".*external.*" -E ".*tests.*"
+  - make clean
+  - coveralls --root . -E ".*external.*" -E ".*tests.*" -E ".*main.c"
   - build-wrapper-linux-x86-64 --out-dir bw-output make clean all
-  - sonar-scanner
-
-cache:
-  directories:
-  - '$HOME/.m2/repository'
-  - '$HOME/.sonar/cache'
+  - sonar-scanner -Dsonar.cfamily.build-wrapper-output=bw-output
 
 notifications:
   email: false
